@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowUpCircle, BarChart2, Info } from 'lucide-react';
 
-const fonts = [
+const initialFonts = [
   {
     name: 'Arial',
     votes: 0,
@@ -69,10 +69,18 @@ const SampleVisual = ({ fontFamily }) => (
 );
 
 export default function FontVoting() {
-  const [fontList, setFontList] = useState(fonts);
+  const [fontList, setFontList] = useState(() => {
+    const savedFonts = localStorage.getItem('fontList');
+    return savedFonts ? JSON.parse(savedFonts) : initialFonts;
+  });
+
   const [showResults, setShowResults] = useState(false);
   const [expandedFont, setExpandedFont] = useState(null);
   const [showScoring, setShowScoring] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('fontList', JSON.stringify(fontList));
+  }, [fontList]);
 
   const handleVote = (index) => {
     const newFontList = [...fontList];
