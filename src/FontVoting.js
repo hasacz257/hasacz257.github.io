@@ -69,6 +69,7 @@ const SampleVisual = ({ fontFamily }) => (
 );
 
 export default function FontVoting() {
+  // Retrieve saved data from localStorage or fall back to initial data
   const [fontList, setFontList] = useState(() => {
     const savedFonts = localStorage.getItem('fontList');
     return savedFonts ? JSON.parse(savedFonts) : initialFonts;
@@ -78,6 +79,7 @@ export default function FontVoting() {
   const [expandedFont, setExpandedFont] = useState(null);
   const [showScoring, setShowScoring] = useState(false);
 
+  // Save updated fontList to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('fontList', JSON.stringify(fontList));
   }, [fontList]);
